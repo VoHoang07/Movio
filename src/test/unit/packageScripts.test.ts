@@ -13,6 +13,7 @@ const rootPackageJson = JSON.parse(
 const mobilePackageJson = JSON.parse(
   readFileSync(resolve(process.cwd(), 'mobile/package.json'), 'utf-8'),
 ) as {
+  main?: string;
   scripts?: Record<string, string>;
   dependencies?: Record<string, string>;
 };
