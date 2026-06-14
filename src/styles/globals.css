@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+:root {
+  color: #2E2A27;
+  background: #FFF8EE;
+  font-family: ui-rounded, "SF Pro Rounded", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+body { margin: 0; min-width: 320px; background: #FFF8EE; color: #2E2A27; }
+* { box-sizing: border-box; }
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+
+.card, .soft-card {
+  border-radius: 28px;
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 18px 45px rgba(63, 107, 53, .10);
+  border: 1px solid rgba(111, 143, 78, .10);
+}
+
+.sidebar-panel { background: rgba(249,246,239,.94); border: 1px solid rgba(255,255,255,.75); }
+.shadow-soft { box-shadow: 0 18px 45px rgba(63, 107, 53, .10); }
+
+.landscape-bg::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(circle at 78% 9%, rgba(169,214,229,.45) 0 70px, transparent 72px),
+    radial-gradient(circle at 87% 14%, rgba(255,255,255,.88) 0 58px, transparent 60px),
+    radial-gradient(circle at 72% 16%, rgba(255,255,255,.82) 0 48px, transparent 50px),
+    linear-gradient(180deg, #FFF8EE 0%, #FFF8EE 68%, #ECF7D8 69%, #DDEFC5 100%);
+}
+.landscape-bg::after {
+  content: ""; position: absolute; left: -5%; right: -5%; bottom: -140px; height: 330px; pointer-events: none;
+  background:
+    radial-gradient(ellipse at 22% 62%, #CFE8AD 0 33%, transparent 34%),
+    radial-gradient(ellipse at 56% 64%, #D9F0B8 0 38%, transparent 39%),
+    radial-gradient(ellipse at 84% 63%, #C9E7A7 0 34%, transparent 35%);
+  opacity: .9;
+}
+
+.rotate-y-180 { transform: rotateY(180deg); }
+.perspective-1000 { perspective: 1000px; }
+
+@media (max-width: 1023px) {
+  .sidebar-panel nav a:nth-child(n+6) { display: none; }
+}
