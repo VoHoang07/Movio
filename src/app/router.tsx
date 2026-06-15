@@ -9,6 +9,17 @@ import { ReviewPage } from '@/presentation/pages/ReviewPage';
 import { ProfilePage } from '@/presentation/pages/ProfilePage';
 import { SettingsPage } from '@/presentation/pages/SettingsPage';
 
+export const appRoutes = [
+  '/',
+  '/dashboard',
+  '/vocabulary',
+  '/learn',
+  '/quiz',
+  '/review',
+  '/profile',
+  '/settings',
+] as const;
+
 export const router = createBrowserRouter([
   {
     path: '/',

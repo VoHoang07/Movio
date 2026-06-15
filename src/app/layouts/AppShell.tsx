@@ -8,7 +8,6 @@ const navigationItems = [
   { to: '/learn', label: 'Learn', icon: '✨' },
   { to: '/quiz', label: 'Quiz', icon: '🎯' },
   { to: '/review', label: 'Review', icon: '🌱' },
-  { to: '/dashboard', label: 'Achievements', icon: '🏆' },
   { to: '/profile', label: 'Profile', icon: '🐾' },
   { to: '/settings', label: 'Settings', icon: '⚙️' },
 ];
@@ -20,20 +19,21 @@ export function Sidebar() {
         <h1 className="text-[34px] font-black leading-none text-[#7a3f12]">Movio</h1>
         <p className="mt-3 text-[15px] font-semibold text-muted">Learn actions naturally</p>
       </div>
-      <nav className="grid grid-cols-4 gap-1 lg:mt-9 lg:grid-cols-1 lg:gap-2">
+      <nav className="grid grid-cols-5 gap-1 lg:mt-9 lg:grid-cols-1 lg:gap-2">
         {navigationItems.map((item) => (
           <NavLink
             key={`${item.to}-${item.label}`}
             to={item.to}
             className={({ isActive }) =>
-              `flex items-center justify-center gap-2 rounded-2xl px-2 py-3 text-xs font-extrabold transition hover:-translate-y-0.5 lg:justify-start lg:px-4 lg:text-[15px] ${
-                isActive && item.label !== 'Achievements'
+              `flex min-h-12 items-center justify-center gap-2 rounded-2xl px-2 py-3 text-xs font-extrabold transition hover:-translate-y-0.5 active:scale-95 lg:justify-start lg:px-4 lg:text-[15px] ${
+                isActive
                   ? 'bg-[#EDF9D9] text-[#1F8D3F] shadow-[inset_0_0_0_1px_rgba(111,143,78,.12)]'
                   : 'text-text hover:bg-white/70'
               }`
             }
+            aria-label={item.label}
           >
-            <span className="text-lg">{item.icon}</span>
+            <span className="text-lg" aria-hidden="true">{item.icon}</span>
             <span className="hidden sm:inline lg:inline">{item.label}</span>
           </NavLink>
         ))}
@@ -42,7 +42,7 @@ export function Sidebar() {
         <Mascot type="dog" size="sm" />
         <p className="mt-2 font-extrabold text-[#3a2f45]">Keep going! 💪</p>
         <p className="mt-1 text-sm text-muted">You’re doing great! Let’s learn one more action.</p>
-        <button className="mt-4 rounded-2xl bg-primary px-4 py-2 text-sm font-bold text-white">Let’s go</button>
+        <NavLink to="/learn" className="mt-4 inline-flex rounded-2xl bg-primary px-4 py-2 text-sm font-bold text-white transition hover:scale-105 active:scale-95">Let’s go</NavLink>
       </div>
       <div className="mt-auto hidden justify-center pt-7 lg:flex">
         <div className="rounded-full bg-[#f0ede5] p-1 text-xl"><span className="rounded-full bg-white px-4 py-2">☀️</span><span className="px-4 py-2">🌙</span></div>
@@ -56,7 +56,7 @@ export function AppShell() {
     <div className="relative min-h-screen overflow-hidden bg-background text-text">
       <div className="landscape-bg" />
       <FloatingLeaves />
-      <div className="relative z-10 mx-auto flex min-h-screen max-w-[1536px] gap-6 px-4 py-5 pb-28 lg:px-5 lg:pb-5">
+      <div className="relative z-10 mx-auto flex min-h-screen max-w-[1536px] gap-6 px-4 py-5 pb-[calc(7.5rem+env(safe-area-inset-bottom))] lg:px-5 lg:pb-5">
         <Sidebar />
         <main className="min-w-0 flex-1 lg:pl-4">
           <Outlet />

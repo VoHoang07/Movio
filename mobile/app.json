@@ -8,10 +8,15 @@
     "scheme": "movio",
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.movio.app",
+      "buildNumber": "1"
     },
     "android": {
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.movio.app",
+      "versionCode": 1
     }
   }
 }
+

@@ -18,6 +18,23 @@ const mobilePackageJson = JSON.parse(
   dependencies?: Record<string, string>;
 };
 
+const mobileAppJson = JSON.parse(
+  readFileSync(resolve(process.cwd(), 'mobile/app.json'), 'utf-8'),
+) as {
+  expo?: {
+    ios?: { bundleIdentifier?: string; buildNumber?: string };
+    android?: { package?: string; versionCode?: number };
+  };
+};
+
+const vercelJson = JSON.parse(
+  readFileSync(resolve(process.cwd(), 'vercel.json'), 'utf-8'),
+) as {
+  rewrites?: Array<{ source?: string; destination?: string }>;
+};
+
+const envExample = readFileSync(resolve(process.cwd(), '.env.example'), 'utf-8');
+
 describe('root mobile Expo scripts', () => {
   it('delegates Expo startup to the mobile project without invoking npx from the root', () => {
     expect(rootPackageJson.scripts?.mobile).toBe('cd mobile && npm run start');
@@ -62,4 +79,25 @@ describe('root mobile Expo scripts', () => {
   it('does not leave Expo project state in the repository root', () => {
     expect(existsSync(resolve(process.cwd(), '.expo'))).toBe(false);
   });
-});
+  });
+
+  describe('production deployment configuration', () => {
+  it('routes direct SPA URLs back to the Vite entry file on Vercel', () => {
+    expect(vercelJson.rewrites).toContainEqual({
+      source: '/(.*)',
+      destination: '/index.html',
+    });
+  });
+
+  it('documents the public mobile WebView URL variable without committing a real secret', () => {
+    expect(envExample).toContain('EXPO_PUBLIC_MOVIO_WEB_URL=');
+    expect(envExample).not.toMatch(/(token|secret|password|apikey)\s*=/i);
+  });
+
+  it('declares stable native identifiers for future store builds', () => {
+    expect(mobileAppJson.expo?.ios?.bundleIdentifier).toBe('com.movio.app');
+    expect(mobileAppJson.expo?.ios?.buildNumber).toBe('1');
+    expect(mobileAppJson.expo?.android?.package).toBe('com.movio.app');
+    expect(mobileAppJson.expo?.android?.versionCode).toBe(1);
+  });
+  });
